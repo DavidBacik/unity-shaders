@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshRenderer))]
 public class TorusGenerator : MonoBehaviour
 {
-    public float tubeRadius = 0.5f;
-    public float torusRadius = 2f;
-    public int tubeSegments = 24;
-    public int torusSegments = 18;
+    [SerializeField] private float _tubeRadius = 0.5f;
+    [SerializeField] private  float _torusRadius = 2f;
+    [SerializeField] private  int _tubeSegments = 24;
+    [SerializeField] private  int _torusSegments = 18;
 
     void Start()
     {
         MeshFilter meshFilter = GetComponent<MeshFilter>();
-        meshFilter.mesh = CreateTorusMesh(tubeRadius, torusRadius, tubeSegments, torusSegments);
+        meshFilter.mesh = CreateTorusMesh(_tubeRadius, _torusRadius, _tubeSegments, _torusSegments);
     }
 
     Mesh CreateTorusMesh(float tubeRadius, float torusRadius, int tubeSegments, int torusSegments)
