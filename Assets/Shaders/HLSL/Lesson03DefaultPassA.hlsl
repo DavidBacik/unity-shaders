@@ -56,6 +56,7 @@ half4 FragmentShaderMain(VertexOutput v) : SV_Target
 {
     // sample surface color from texture
     half4 surfaceColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, v.uv * _MainTex_ST.xy + _MainTex_ST.zw);
+    //clip(surfaceColor.x - 0.5);
     
     // main light
     Light mainLight = GetMainLight();

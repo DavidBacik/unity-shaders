@@ -34,6 +34,7 @@ Shader "Learning/Lesson03ShaderA"
             ZWrite On
             ZTest LEqual
             Cull Back
+            //AlphaTest Greater 0.8 // legacy
         
             HLSLPROGRAM
             #pragma prefer_hlslcc gles
