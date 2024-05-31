@@ -1,4 +1,4 @@
-Shader "Learning/Lesson01ShaderA"
+Shader "Learning/Lesson01Shader"
 {
     Properties
     {
@@ -12,7 +12,7 @@ Shader "Learning/Lesson01ShaderA"
             "RenderType"       = "Opaque"
             "PerformanceChecks"= "False"
             "RenderPipeline"   = "UniversalPipeline"
-            "Queue"            = "Geometry"
+            "Queue"            = "Geometry+1"
             "IgnoreProjector"  = "True"
         }
 
