@@ -11,6 +11,9 @@ CBUFFER_START(UnityPerMaterial)
     half4 _SpecularColor;
     half _SpecularPower;
 
+    half _Speed;
+    half _Displace;
+
     TEXTURE2D(_MainTex);
     SAMPLER(sampler_MainTex);
     float4 _MainTex_ST;
@@ -30,6 +33,7 @@ struct VertexOutput
     half3 normal : NORMAL;
     float3 posWorld : TANGENT;
     float2 uv : TEXCOORD0;
+    float2 uvShift : TEXCOORD1;
     DECLARE_SHADOW_COORD(7)
 };
 
@@ -38,14 +42,32 @@ VertexOutput VertexShaderMain(VertexInput v)
 {
     VertexOutput o = (VertexOutput)0;
 
+    float2 uvShift = v.uv + float2(frac(_Time.y * _Speed), -frac(_Time.y * _Speed));
     float3 posWorld = TransformObjectToWorld(v.position.xyz);
 
+    posWorld += v.normal * _Displace * SAMPLE_TEXTURE2D_LOD(_MainTex, sampler_MainTex, uvShift, 0);
+    
     o.posClip = TransformWorldToHClip(posWorld);
     o.posWorld = posWorld;
     o.normal = v.normal.xyz;
     o.uv = v.uv;
 
-    //o.uv.x += frac(_Time.y);
+    // o.uv.x += frac(_Time.y);
+    
+    // float displacement = sin(_Time.y + v.normal.y) * 25;
+    // v.normal.xyz += v.normal * displacement;
+    
+    //---
+    // float rotationSpeed = 1.0;
+    // float angle = _Time.y * rotationSpeed;
+    // float c = cos(angle);
+    // float s = sin(angle);
+    // float2x2 rotationMatrix = float2x2(c, -s, s, c);
+    // float2 centeredUV = o.uv - float2(0.5, 0.5);
+    // float2 rotatedUV = mul(rotationMatrix, centeredUV) + float2(0.5, 0.5);
+    //
+    // o.uv = rotatedUV;
+    //---
     
     INIT_SHADOW_COORD(o, posWorld);
     return o;
@@ -56,7 +78,7 @@ half4 FragmentShaderMain(VertexOutput v) : SV_Target
 {
     // sample surface color from texture
     half4 surfaceColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, v.uv * _MainTex_ST.xy + _MainTex_ST.zw);
-    //clip(surfaceColor.x - 0.5);
+    // clip(surfaceColor.x - 0.5);
     
     // main light
     Light mainLight = GetMainLight();

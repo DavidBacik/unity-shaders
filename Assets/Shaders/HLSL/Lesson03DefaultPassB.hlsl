@@ -51,7 +51,7 @@ VertexOutput VertexShaderMain(VertexInput v)
     o.normal = v.normal.xyz;
     o.uv = v.uv;
 
-    //o.uv.x += frac(_Time.y);
+    // o.uv.x += frac(_Time.y);
     
     INIT_SHADOW_COORD(o, posWorld);
     return o;

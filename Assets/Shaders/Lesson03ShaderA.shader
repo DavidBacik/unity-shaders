@@ -6,6 +6,9 @@ Shader "Learning/Lesson03ShaderA"
         
         _SpecularColor("Specular color", Color) = (1,1,1,1)
         _SpecularPower("Specular power", Range(1,1000)) = 10
+        
+        _Displace("_Displace power", Range(0,5)) = 1
+        _Speed("Speed", Range(0,5)) = 1
 
         _MainTex("Main texture", 2D) = "white" {}
     }
